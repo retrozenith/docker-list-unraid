@@ -94,10 +94,15 @@ echo ""
 # Enter source directory
 pushd "${SOURCE_DIR}" > /dev/null
 
-# Normalize line endings (if dos2unix is available)
+# Normalize line endings (CRLF -> LF) - required for Unraid
+echo "Normalizing line endings..."
 if command -v dos2unix &> /dev/null; then
-    echo "Normalizing line endings..."
+    # Use dos2unix if available
     find usr -type f \( -name "*.php" -o -name "*.js" -o -name "*.css" -o -name "*.page" \) -exec dos2unix {} \; 2>/dev/null
+else
+    # Fallback: use sed to remove carriage returns
+    echo "  (dos2unix not found, using sed fallback)"
+    find usr -type f \( -name "*.php" -o -name "*.js" -o -name "*.css" -o -name "*.page" \) -exec "${PREFIX}sed" -i 's/\r$//' {} \;
 fi
 
 # Set permissions
