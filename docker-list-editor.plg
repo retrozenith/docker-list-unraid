@@ -5,7 +5,7 @@
 <!ENTITY version   "2025.12.14">
 <!ENTITY launch    "Docker">
 <!ENTITY pluginURL "https://github.com/retrozenith/docker-list-editor/raw/main/docker-list-editor.plg">
-<!ENTITY md5       "">
+<!ENTITY md5       "51e70ed228c79413fdf94f2d0b5fe112">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" min="6.12.0">
