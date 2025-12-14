@@ -2,10 +2,10 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "docker-list-editor">
 <!ENTITY author    "Florian Victor">
-<!ENTITY version   "2025.12.14b">
+<!ENTITY version   "2025.12.14c">
 <!ENTITY launch    "Docker">
 <!ENTITY pluginURL "https://github.com/retrozenith/docker-list-unraid/raw/refs/heads/master/docker-list-editor.plg">
-<!ENTITY md5       "56ba757a2b2d91a16937ac46531f1a7b">
+<!ENTITY md5       "6773d3162cd9eef27af8891115d0045f">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" min="6.12.0">
