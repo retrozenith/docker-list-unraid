@@ -1,0 +1,6 @@
+# Ensure Unix line endings for all source files
+source/**/*.page text eol=lf
+source/**/*.php text eol=lf
+source/**/*.js text eol=lf
+source/**/*.css text eol=lf
+*.sh text eol=lf
