@@ -4,7 +4,10 @@
 # Creates a .txz package for Unraid plugin installation
 #
 # Usage: ./build.sh [version]
-# Example: ./build.sh 2024.12.14
+# Examples: 
+#   ./build.sh              # Auto-generates version like 2025.12.14
+#   ./build.sh 2025.12.14a  # Specific version with suffix
+#   ./build.sh bump         # Auto-increment suffix (a->b->c...)
 #
 
 set -e
@@ -19,11 +22,54 @@ fi
 
 # Configuration
 PLUGIN_NAME="docker-list-editor"
-VERSION="${1:-$(date +%Y.%m.%d)}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_DIR="${SCRIPT_DIR}/source/${PLUGIN_NAME}"
 ARCHIVE_DIR="${SCRIPT_DIR}/archive"
 PLUGIN_FILE="${SCRIPT_DIR}/${PLUGIN_NAME}.plg"
+
+# Version handling
+get_current_version() {
+    if [ -f "${PLUGIN_FILE}" ]; then
+        "${PREFIX}sed" -n 's/.*<!ENTITY version[[:space:]]*"\([^"]*\)">.*/\1/p' "${PLUGIN_FILE}"
+    else
+        echo ""
+    fi
+}
+
+increment_suffix() {
+    local version="$1"
+    local base_date=$(echo "$version" | grep -oE '^[0-9]{4}\.[0-9]{2}\.[0-9]{2}')
+    local suffix=$(echo "$version" | grep -oE '[a-z]$' || echo "")
+    local today=$(date +%Y.%m.%d)
+    
+    if [ "$base_date" != "$today" ]; then
+        # New day, start fresh
+        echo "${today}"
+    elif [ -z "$suffix" ]; then
+        # Same day, no suffix yet, add 'a'
+        echo "${base_date}a"
+    else
+        # Increment suffix (a->b, b->c, etc.)
+        local next_suffix=$(echo "$suffix" | tr 'a-y' 'b-z')
+        if [ "$next_suffix" == "$suffix" ]; then
+            # Already at 'z', wrap to 'za' (unlikely but handled)
+            echo "${base_date}za"
+        else
+            echo "${base_date}${next_suffix}"
+        fi
+    fi
+}
+
+# Determine version
+if [ "$1" == "bump" ]; then
+    CURRENT_VERSION=$(get_current_version)
+    VERSION=$(increment_suffix "$CURRENT_VERSION")
+    echo "Bumping version: $CURRENT_VERSION -> $VERSION"
+elif [ -n "$1" ]; then
+    VERSION="$1"
+else
+    VERSION=$(date +%Y.%m.%d)
+fi
 
 echo "============================================"
 echo "Building ${PLUGIN_NAME} v${VERSION}"
@@ -87,10 +133,10 @@ if [ -f "${PLUGIN_FILE}" ]; then
     echo "Updating ${PLUGIN_FILE}..."
     
     # Update version
-    "${PREFIX}sed" -i.bak 's/<!ENTITY version.*>/<!ENTITY version   "'"${VERSION}"'">/' "${PLUGIN_FILE}"
+    "${PREFIX}sed" -i.bak 's/<!ENTITY version[[:space:]]*"[^"]*">/<!ENTITY version   "'"${VERSION}"'">/' "${PLUGIN_FILE}"
     
     # Update MD5 hash
-    "${PREFIX}sed" -i.bak 's/<!ENTITY md5.*>/<!ENTITY md5       "'"${HASH}"'">/' "${PLUGIN_FILE}"
+    "${PREFIX}sed" -i.bak 's/<!ENTITY md5[[:space:]]*"[^"]*">/<!ENTITY md5       "'"${HASH}"'">/' "${PLUGIN_FILE}"
     
     # Clean up backup files
     rm -f "${PLUGIN_FILE}.bak"
@@ -105,9 +151,8 @@ echo "Build complete!"
 echo "============================================"
 echo ""
 echo "To install on Unraid:"
-echo "1. Copy ${PACKAGE_FILE} to your Unraid server"
-echo "2. Install via Plugins > Install Plugin with the .plg file"
+echo "1. Push changes to GitHub"
+echo "2. Install via: https://github.com/retrozenith/docker-list-unraid/raw/refs/heads/master/${PLUGIN_NAME}.plg"
 echo ""
-echo "For development testing:"
-echo "1. Extract to /usr/local/emhttp/plugins/${PLUGIN_NAME}/"
-echo "2. Refresh the Docker page in Unraid WebUI"
+echo "Quick rebuild (increment suffix):"
+echo "  ./build.sh bump"
