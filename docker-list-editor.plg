@@ -5,7 +5,7 @@
 <!ENTITY version   "2025.12.14">
 <!ENTITY launch    "Docker">
 <!ENTITY pluginURL "https://github.com/retrozenith/docker-list-editor/raw/main/docker-list-editor.plg">
-<!ENTITY md5       "51e70ed228c79413fdf94f2d0b5fe112">
+<!ENTITY md5       "33ab8ecb13eb4c6665520207f52e5fed">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" min="6.12.0">
@@ -50,7 +50,7 @@ echo "Dependency check passed: dynamix.docker.manager found."
 
 <!-- Download package -->
 <FILE Name="/boot/config/plugins/&name;/&name;-&version;.txz">
-<URL>https://github.com/retrozenith/docker-list-editor/releases/download/&version;/&name;-&version;.txz</URL>
+<URL>https://github.com/retrozenith/docker-list-unraid/raw/refs/heads/master/archive/&name;-&version;.txz</URL>
 <MD5>&md5;</MD5>
 </FILE>
 

@@ -1,9 +1,9 @@
-Menu="Docker:99"
+Menu="Docker:docklist"
 Title="List Editor"
-Type="xmenu"
-Markdown="false"
+Icon="list-ul"
+Cond="(pgrep('docker')!==false)"
 ---
-<?php
+<?PHP
 /* Docker List Editor - Companion plugin for dynamix.docker.manager
  * Copyright 2025, Florian Victor (retrozenith)
  *
@@ -13,16 +13,27 @@ Markdown="false"
  *
  * Adds list-based editing for environment variables, ports, and volumes.
  */
-
-// Determine if we're on a Docker container edit page
-$uri = $_SERVER['REQUEST_URI'] ?? '';
-$isDockerEdit = preg_match('/(AddContainer|UpdateContainer)/', $uri);
 ?>
-
-<!-- Always load styles for consistent appearance -->
 <link rel="stylesheet" href="/plugins/docker-list-editor/styles/listEditor.css">
-
-<?php if ($isDockerEdit): ?>
-<!-- Load the main list editor JavaScript only on container edit pages -->
 <script src="/plugins/docker-list-editor/javascript/listEditor.js"></script>
-<?php endif; ?>
+
+<div class="title">
+  <span class="left"><i class="fa fa-list-ul icon"></i> Docker List Editor</span>
+</div>
+
+<p>This plugin adds "List Mode" toggles to the Add/Edit Container pages, allowing you to edit environment variables, ports, and volumes as text lists instead of individual form fields.</p>
+
+<p><strong>How to use:</strong></p>
+<ol>
+  <li>Go to Docker &gt; Add Container or edit an existing container</li>
+  <li>Enable "Advanced View" in the upper right corner</li>
+  <li>Look for "List Mode" buttons next to Environment Variables, Ports, and Paths sections</li>
+  <li>Click to toggle between form and list editing modes</li>
+</ol>
+
+<p><strong>Supported formats:</strong></p>
+<ul>
+  <li>Environment: <code>NAME=VALUE</code></li>
+  <li>Ports: <code>HOST:CONTAINER/PROTOCOL</code></li>
+  <li>Paths: <code>/host/path:/container/path:MODE</code></li>
+</ul>
