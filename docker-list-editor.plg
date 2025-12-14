@@ -1,0 +1,95 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "docker-list-editor">
+<!ENTITY author    "Florian Victor">
+<!ENTITY version   "2025.12.14">
+<!ENTITY launch    "Docker">
+<!ENTITY pluginURL "https://github.com/retrozenith/docker-list-editor/raw/main/docker-list-editor.plg">
+<!ENTITY md5       "">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" min="6.12.0">
+
+<CHANGES>
+##&name;
+
+###2025.12.14
+- Initial release
+- List editing for environment variables
+- List editing for port mappings  
+- List editing for volume mappings
+- Docker-compose-like syntax support
+</CHANGES>
+
+<!--
+Docker List Editor - Companion plugin for dynamix.docker.manager
+Adds text-based list editing for Docker container configurations in Advanced mode.
+
+Formats supported:
+- Environment Variables: NAME=VALUE
+- Port Mappings: HOST:CONTAINER/PROTOCOL
+- Volume Mappings: /host/path:/container/path:MODE
+-->
+
+<!-- Pre-install: Check for dockerMan dependency -->
+<FILE Run="/bin/bash">
+<INLINE>
+if [ ! -d /usr/local/emhttp/plugins/dynamix.docker.manager ]; then
+    echo ""
+    echo "-----------------------------------------------------------"
+    echo " ERROR: dynamix.docker.manager plugin is required!"
+    echo " This is the built-in Docker Manager plugin."
+    echo " Please ensure Docker is enabled in Settings > Docker."
+    echo "-----------------------------------------------------------"
+    echo ""
+    exit 1
+fi
+echo "Dependency check passed: dynamix.docker.manager found."
+</INLINE>
+</FILE>
+
+<!-- Download package -->
+<FILE Name="/boot/config/plugins/&name;/&name;-&version;.txz">
+<URL>https://github.com/retrozenith/docker-list-editor/releases/download/&version;/&name;-&version;.txz</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+<!-- Install package -->
+<FILE Run="/bin/bash">
+<INLINE>
+# Install the plugin package
+upgradepkg --install-new /boot/config/plugins/&name;/&name;-&version;.txz
+
+# Verify installation
+if [ -d /usr/local/emhttp/plugins/&name; ]; then
+    echo ""
+    echo "-----------------------------------------------------------"
+    echo " &name; version &version; installed successfully!"
+    echo " Navigate to Docker > Add/Edit Container to use."
+    echo " Look for 'List Mode' toggles in Advanced View."
+    echo "-----------------------------------------------------------"
+    echo ""
+else
+    echo "ERROR: Installation failed!"
+    exit 1
+fi
+</INLINE>
+</FILE>
+
+<!-- Removal script -->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+echo "Removing &name;..."
+
+# Remove the installed package
+removepkg &name;-&version; 2>/dev/null
+
+# Clean up plugin directories
+rm -rf /boot/config/plugins/&name;
+rm -rf /usr/local/emhttp/plugins/&name;
+
+echo "&name; has been removed."
+</INLINE>
+</FILE>
+
+</PLUGIN>

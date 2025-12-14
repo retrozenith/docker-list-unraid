@@ -1,0 +1,395 @@
+/**
+ * Docker List Editor - Styles
+ * Companion plugin for dynamix.docker.manager
+ * 
+ * Provides styling for:
+ * - Toggle buttons
+ * - Textarea editors
+ * - Validation feedback
+ * - Toast notifications
+ * 
+ * Supports both dark and light Unraid themes.
+ */
+
+/* ============================================
+   Toggle Button
+   ============================================ */
+
+.list-editor-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    margin-left: 12px;
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: #e2e8f0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid #4a5568;
+    user-select: none;
+    vertical-align: middle;
+}
+
+.list-editor-toggle:hover {
+    background: linear-gradient(135deg, #5a6578 0%, #3d4758 100%);
+    border-color: #667eea;
+    transform: translateY(-1px);
+}
+
+.list-editor-toggle.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #764ba2;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.list-editor-toggle i {
+    font-size: 14px;
+}
+
+/* ============================================
+   Editor Container
+   ============================================ */
+
+.list-editor-container {
+    margin: 15px 0;
+    padding: 0;
+    background: #1a202c;
+    border-radius: 8px;
+    border: 1px solid #4a5568;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.list-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    border-bottom: 1px solid #4a5568;
+}
+
+.list-editor-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a0aec0;
+}
+
+.list-editor-title i {
+    margin-right: 6px;
+    color: #667eea;
+}
+
+.list-editor-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.list-editor-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background: #2d3748;
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    color: #a0aec0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.list-editor-btn:hover {
+    background: #4a5568;
+    color: #e2e8f0;
+    border-color: #667eea;
+}
+
+.list-editor-btn:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   Textarea
+   ============================================ */
+
+.list-editor-textarea {
+    width: 100%;
+    min-height: 180px;
+    max-height: 400px;
+    padding: 15px;
+    font-family: 'Consolas', 'Monaco', 'SF Mono', 'Menlo', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    background: #0d1117;
+    color: #c9d1d9;
+    border: none;
+    border-top: 1px solid #30363d;
+    border-bottom: 1px solid #30363d;
+    resize: vertical;
+    box-sizing: border-box;
+    outline: none;
+    tab-size: 4;
+}
+
+.list-editor-textarea:focus {
+    background: #161b22;
+}
+
+.list-editor-textarea::placeholder {
+    color: #484f58;
+    font-style: italic;
+}
+
+/* Line numbers effect via background */
+.list-editor-textarea {
+    background-image: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.02) 50%);
+    background-size: 100% 2.6em;
+}
+
+/* ============================================
+   Hint & Validation
+   ============================================ */
+
+.list-editor-hint {
+    padding: 10px 15px;
+    font-size: 11px;
+    color: #718096;
+    background: #1a202c;
+}
+
+.list-editor-hint i {
+    color: #667eea;
+    margin-right: 5px;
+}
+
+.list-editor-validation {
+    display: none;
+    padding: 10px 15px;
+    font-size: 12px;
+    color: #68d391;
+    background: rgba(104, 211, 145, 0.1);
+    border-top: 1px solid rgba(104, 211, 145, 0.2);
+}
+
+.list-editor-validation.has-errors {
+    color: #fc8181;
+    background: rgba(252, 129, 129, 0.1);
+    border-top-color: rgba(252, 129, 129, 0.2);
+}
+
+.list-editor-validation i {
+    margin-right: 6px;
+}
+
+/* ============================================
+   Toast Notifications
+   ============================================ */
+
+.list-editor-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: #68d391;
+    color: #1a202c;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 10000;
+}
+
+.list-editor-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.list-editor-toast.error {
+    background: #fc8181;
+}
+
+.list-editor-toast i {
+    margin-right: 8px;
+}
+
+/* ============================================
+   Dark Theme (Unraid Default - Black)
+   ============================================ */
+
+body.black .list-editor-container {
+    background: #0d1117;
+    border-color: #30363d;
+}
+
+body.black .list-editor-header {
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+    border-color: #30363d;
+}
+
+body.black .list-editor-textarea {
+    background-color: #010409;
+    color: #c9d1d9;
+    border-color: #21262d;
+}
+
+body.black .list-editor-textarea:focus {
+    background-color: #0d1117;
+}
+
+body.black .list-editor-hint {
+    background: #0d1117;
+}
+
+/* ============================================
+   Light Theme (Unraid White)
+   ============================================ */
+
+body.white .list-editor-toggle {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    color: #2d3748;
+    border-color: #cbd5e0;
+}
+
+body.white .list-editor-toggle:hover {
+    background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+    border-color: #667eea;
+}
+
+body.white .list-editor-toggle.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+body.white .list-editor-container {
+    background: #f7fafc;
+    border-color: #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+body.white .list-editor-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+    border-color: #e2e8f0;
+}
+
+body.white .list-editor-title {
+    color: #4a5568;
+}
+
+body.white .list-editor-btn {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    color: #4a5568;
+}
+
+body.white .list-editor-btn:hover {
+    background: #edf2f7;
+}
+
+body.white .list-editor-textarea {
+    background-color: #ffffff;
+    color: #1a202c;
+    border-color: #e2e8f0;
+}
+
+body.white .list-editor-textarea:focus {
+    background-color: #f7fafc;
+}
+
+body.white .list-editor-textarea::placeholder {
+    color: #a0aec0;
+}
+
+body.white .list-editor-hint {
+    background: #f7fafc;
+    color: #718096;
+}
+
+/* ============================================
+   Azure Theme Support
+   ============================================ */
+
+body.azure .list-editor-toggle.active {
+    background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+}
+
+body.azure .list-editor-title i {
+    color: #0078d4;
+}
+
+/* ============================================
+   Gray Theme Support
+   ============================================ */
+
+body.gray .list-editor-container {
+    background: #1e1e1e;
+    border-color: #333333;
+}
+
+body.gray .list-editor-header {
+    background: linear-gradient(135deg, #252525 0%, #1e1e1e 100%);
+}
+
+body.gray .list-editor-textarea {
+    background-color: #141414;
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+
+@media (max-width: 768px) {
+    .list-editor-toggle {
+        padding: 4px 8px;
+        font-size: 11px;
+        margin-left: 8px;
+    }
+
+    .list-editor-textarea {
+        min-height: 120px;
+        font-size: 12px;
+    }
+
+    .list-editor-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .list-editor-toast {
+        left: 20px;
+        right: 20px;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   Animation Keyframes
+   ============================================ */
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.list-editor-toggle.active i {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   Print Styles (hide editor in print)
+   ============================================ */
+
+@media print {
+    .list-editor-toggle,
+    .list-editor-container {
+        display: none !important;
+    }
+}
